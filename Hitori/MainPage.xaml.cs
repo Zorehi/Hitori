@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,6 +30,7 @@ namespace Hitori
         public MainPage()
         {
             this.InitializeComponent();
+            this.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 30, 30 ,30));
 
             this.CreateHitoriMatrix();
 
@@ -59,9 +61,16 @@ namespace Hitori
 
                     button.Click += ChangeColorButton_Click;
                     button.DataContext = this.hitoriMatrix[row, col];
+                    button.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+                    button.Height = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;
+                    button.Width = button.Height;
+                    button.FontSize = button.Height / 3;
+                    button.Margin = new Thickness(1);
+
                     this.hitoriMatrix[row, col].Button = button;
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, col);
+
                     dynamicGrid.Children.Add(button);
                 }
             }
@@ -79,15 +88,17 @@ namespace Hitori
             switch (box.State)
             {
                 case State.Black:
-                    button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(1, 255, 0, 0));
+                    button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 90, 90, 90));
                     box.State = State.Gray;
                     break;
                 case State.White:
-                    button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(1, 0, 0, 0));
+                    button.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+                    button.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
                     box.State = State.Black;
                     break;
                 case State.Gray:
-                    button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(1, 255, 255, 255));
+                    button.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 170, 170, 170));
+                    button.Foreground = new SolidColorBrush(Windows.UI.Colors.Black);
                     box.State = State.White;
                     break;
             }
@@ -97,7 +108,15 @@ namespace Hitori
         {
             this.hitoriMatrix = new Box[this.gridLenght, this.gridLenght];
 
-            this.hitoriMatrix[0, 0] = new Box(4, State.Black);
+            for (int i = 0; i < this.gridLenght; i++)
+            {
+                for (int j = 0; j < this.gridLenght; j++)
+                {
+                    this.hitoriMatrix[i, j] = new Box(1, State.Black);
+                }
+            }
+
+            /*this.hitoriMatrix[0, 0] = new Box(4, State.Black);
             this.hitoriMatrix[0, 1] = new Box(2, State.Black);
             this.hitoriMatrix[0, 2] = new Box(1, State.Black);
             this.hitoriMatrix[0, 3] = new Box(5, State.Black);
@@ -125,7 +144,7 @@ namespace Hitori
             this.hitoriMatrix[4, 1] = new Box(1, State.Black);
             this.hitoriMatrix[4, 2] = new Box(5, State.Black);
             this.hitoriMatrix[4, 3] = new Box(3, State.Black);
-            this.hitoriMatrix[4, 4] = new Box(4, State.Black);
+            this.hitoriMatrix[4, 4] = new Box(4, State.Black);*/
         }
     }
 }
