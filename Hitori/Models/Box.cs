@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace Hitori.Model
+namespace Hitori.Models
 {
     class Box
     {

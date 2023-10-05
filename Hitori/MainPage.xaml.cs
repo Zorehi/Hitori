@@ -1,4 +1,4 @@
-﻿using Hitori.Model;
+﻿using Hitori.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +32,7 @@ namespace Hitori
             this.InitializeComponent();
             this.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 30, 30 ,30));
 
-            this.CreateHitoriMatrix();
+            this.hitoriMatrix = Hitori.Models.Matrix.GenerateMatrix5x5();
 
             this.CreateDynamicGrid();
         }
@@ -102,49 +102,6 @@ namespace Hitori
                     box.State = State.White;
                     break;
             }
-        } 
-
-        private void CreateHitoriMatrix()
-        {
-            this.hitoriMatrix = new Box[this.gridLenght, this.gridLenght];
-
-            for (int i = 0; i < this.gridLenght; i++)
-            {
-                for (int j = 0; j < this.gridLenght; j++)
-                {
-                    this.hitoriMatrix[i, j] = new Box(1, State.Black);
-                }
-            }
-
-            /*this.hitoriMatrix[0, 0] = new Box(4, State.Black);
-            this.hitoriMatrix[0, 1] = new Box(2, State.Black);
-            this.hitoriMatrix[0, 2] = new Box(1, State.Black);
-            this.hitoriMatrix[0, 3] = new Box(5, State.Black);
-            this.hitoriMatrix[0, 4] = new Box(3, State.Black);
-
-            this.hitoriMatrix[1, 0] = new Box(1, State.Black);
-            this.hitoriMatrix[1, 1] = new Box(4, State.Black);
-            this.hitoriMatrix[1, 2] = new Box(3, State.Black);
-            this.hitoriMatrix[1, 3] = new Box(2, State.Black);
-            this.hitoriMatrix[1, 4] = new Box(2, State.Black);
-
-            this.hitoriMatrix[2, 0] = new Box(3, State.Black);
-            this.hitoriMatrix[2, 1] = new Box(5, State.Black);
-            this.hitoriMatrix[2, 2] = new Box(4, State.Black);
-            this.hitoriMatrix[2, 3] = new Box(2, State.Black);
-            this.hitoriMatrix[2, 4] = new Box(2, State.Black);
-
-            this.hitoriMatrix[3, 0] = new Box(1, State.Black);
-            this.hitoriMatrix[3, 1] = new Box(5, State.Black);
-            this.hitoriMatrix[3, 2] = new Box(2, State.Black);
-            this.hitoriMatrix[3, 3] = new Box(5, State.Black);
-            this.hitoriMatrix[3, 4] = new Box(5, State.Black);
-
-            this.hitoriMatrix[4, 0] = new Box(1, State.Black);
-            this.hitoriMatrix[4, 1] = new Box(1, State.Black);
-            this.hitoriMatrix[4, 2] = new Box(5, State.Black);
-            this.hitoriMatrix[4, 3] = new Box(3, State.Black);
-            this.hitoriMatrix[4, 4] = new Box(4, State.Black);*/
         }
     }
 }
