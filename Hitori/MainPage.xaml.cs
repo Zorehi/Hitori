@@ -25,14 +25,14 @@ namespace Hitori
     public sealed partial class MainPage : Page
     {
         private Box[,] hitoriMatrix;
-        private int gridLenght = 5;
+        private int gridLenght = 9;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 30, 30 ,30));
 
-            this.hitoriMatrix = Hitori.Models.Matrix.GenerateMatrix5x5();
+            this.hitoriMatrix = Hitori.Models.Matrix.GenerateMatrix(this.gridLenght);
 
             this.CreateDynamicGrid();
         }
