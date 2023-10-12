@@ -6,9 +6,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	SizeChanged="Window_SizeChanged">
 
-	<Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+	<Page.Resources>
+		<Style x:Name="ButtonWithoutHover" x:Key="ButtonWithoutHover" TargetType="Button">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid Background="{TemplateBinding Background}">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Page.Resources>
 
-    </Grid>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+		<Button HorizontalAlignment="Center" VerticalAlignment="Top" Height="74" Width="220" FontSize="32" Margin="0,0,0,25" Grid.Row="1">Check</Button>
+
+	</Grid>
+
 </Page>
