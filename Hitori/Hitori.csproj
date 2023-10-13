@@ -123,6 +123,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Box.cs" />
+    <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Matrix.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\State.cs" />
