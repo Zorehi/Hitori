@@ -81,7 +81,7 @@ namespace Hitori
 
                     button.Style = ButtonWithoutHover;
 
-                    button.Click += ChangeColorButton_Click;
+                    button.Click += this.hitoriMatrix[row, col].ChangeColorButton_Click;
                     button.DataContext = this.hitoriMatrix[row, col];
                     button.Background = new SolidColorBrush(Colors.Black);
                     //button.Height = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;.
@@ -97,30 +97,6 @@ namespace Hitori
 
                     DynamicGrid.Children.Add(button);
                 }
-            }
-        }
-
-        private void ChangeColorButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            Box box = button.DataContext as Box;
-
-            switch (box.State)
-            {
-                case State.Black:
-                    button.Background = new SolidColorBrush(Color.FromArgb(255, 90, 90, 90));
-                    box.State = State.Gray;
-                    break;
-                case State.White:
-                    button.Background = new SolidColorBrush(Colors.Black);
-                    button.Foreground = new SolidColorBrush(Colors.White);
-                    box.State = State.Black;
-                    break;
-                case State.Gray:
-                    button.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-                    button.Foreground = new SolidColorBrush(Colors.Black);
-                    box.State = State.White;
-                    break;
             }
         }
     }
