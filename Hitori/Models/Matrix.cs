@@ -12,28 +12,28 @@ namespace Hitori.Models
     {
         public static Box[,] GenerateMatrix(int length)
         {
-			if (length != 5 && length != 7 && length != 9)
-			{
-				throw new Exception($"Impossible de généré une matrice {length}x{length}");
-			}
+            if (length != 5 && length != 7 && length != 9)
+            {
+                throw new Exception($"Impossible de généré une matrice {length}x{length}");
+            }
 
-			string filename = $"Assets/Matrix/Matrix{length}x{length}.txt";
-			Box[,] matrix = new Box[length, length];
+            string filename = $"Assets/Matrix/Matrix{length}x{length}.txt";
+            Box[,] matrix = new Box[length, length];
 
-			using (var reader = new StreamReader(filename))
-			{
-				for (int i = 0; i < length; i++)
-				{
-					string line = reader.ReadLine();
-					string[] separateLine = line.Split(' ');
-					for (int j = 0; j < length; j++)
-					{
-						matrix[i, j] = new Box(int.Parse(separateLine[j]), State.Black);
-					}
-				}
-			}
+            using (var reader = new StreamReader(filename))
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    string line = reader.ReadLine();
+                    string[] separateLine = line.Split(' ');
+                    for (int j = 0; j < length; j++)
+                    {
+                        matrix[i, j] = new Box(int.Parse(separateLine[j]), State.Black);
+                    }
+                }
+            }
 
-			return matrix;
-		}
+            return matrix;
+        }
     }
 }
