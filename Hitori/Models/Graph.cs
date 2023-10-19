@@ -10,7 +10,7 @@ namespace Hitori.Models
     {
         private Node[,] _nodes;
 
-        public Graph(int[,] matrix)
+        public Graph(Box[,] matrix)
         {
             int x = matrix.GetLength(0);
             List<Node> list = new List<Node>();
@@ -19,7 +19,7 @@ namespace Hitori.Models
                 for(int j=0; j < x; j++)
                 {
 
-                    Node node = new Node(i, j, matrix[i, j], State.Black);
+                    Node node = new Node(i, j, matrix[i, j]);
                     _nodes[i, j] = node;
                 }
             }
