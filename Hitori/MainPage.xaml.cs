@@ -84,6 +84,7 @@ namespace Hitori
                     button.Click += ChangeColorButton_Click;
                     button.DataContext = this.hitoriMatrix[row, col];
                     button.Background = new SolidColorBrush(Colors.Black);
+                    button.Foreground = new SolidColorBrush(Colors.White);
                     //button.Height = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;.
                     button.VerticalAlignment = VerticalAlignment.Stretch;
                     button.HorizontalAlignment = HorizontalAlignment.Stretch;
