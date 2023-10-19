@@ -30,7 +30,7 @@
 		</Grid.RowDefinitions>
 
 		<Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-		<Button HorizontalAlignment="Center" VerticalAlignment="Top" Height="74" Width="220" FontSize="32" Margin="0,0,0,25" Grid.Row="1">Check</Button>
+		<Button HorizontalAlignment="Center" VerticalAlignment="Top" Height="74" Width="220" FontSize="32" Margin="0,0,0,25" Grid.Row="1" Click="Check">Check</Button>
 
 	</Grid>
 
