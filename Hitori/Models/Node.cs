@@ -17,12 +17,11 @@ namespace Hitori.Models
         {
             this._xpos = x;
             this._ypos = y;
-            this._box.Value = box.Value;
-            this._box.State= box.State;
+            this._box = box;
         }
         public Box Box { get => _box ; set => _box = value; }
         public int Xpos { get => _xpos; set => _xpos = value; }
         public int Ypos { get => _ypos; set => _ypos = value; }
-        public List<Node> AdjaList { get => adjaList; set => AdjaList = value; }
+        public List<Node> AdjaList { get => adjaList; set => adjaList = value; }
     }
 }
