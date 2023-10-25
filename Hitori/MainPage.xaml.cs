@@ -25,9 +25,8 @@ namespace Hitori
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Box[,] hitoriMatrix;
         private Graph hitoriGraph;
-        private int gridLenght = 5;
+        private int gridLenght = 9;
 
         public MainPage()
         {
@@ -35,8 +34,7 @@ namespace Hitori
 
             this.Background = new SolidColorBrush(Color.FromArgb(255, 30, 30, 30));
 
-            this.hitoriMatrix = Models.Matrix.GenerateMatrix(this.gridLenght);
-            this.hitoriGraph = new Graph(this.hitoriMatrix);
+            this.hitoriGraph = new Graph(Models.Matrix.ReadMatrixInFile(this.gridLenght));
 
             this.CreateDynamicGrid();
         }
@@ -56,7 +54,7 @@ namespace Hitori
             {
                 for (int col = 0; col < this.gridLenght; col++)
                 {
-                    this.hitoriMatrix[row, col].Button.FontSize = this.hitoriMatrix[row, col].Button.ActualHeight / 3;
+                    this.hitoriGraph.Nodes[row, col].Box.Button.FontSize = this.hitoriGraph.Nodes[row, col].Box.Button.ActualHeight / 3;
                 }
             }
         }
@@ -79,12 +77,11 @@ namespace Hitori
                 for (int col = 0; col < this.gridLenght; col++)
                 {
                     Button button = new Button();
-                    button.Content = $"{this.hitoriMatrix[row, col].Value}"; // Texte de chaque bouton
+                    button.Content = $"{this.hitoriGraph.Nodes[row, col].Box.Value}"; // Texte de chaque bouton
 
                     button.Style = ButtonWithoutHover;
 
-                    button.Click += this.hitoriMatrix[row, col].ChangeColorButton_Click;
-                    button.DataContext = this.hitoriMatrix[row, col];
+                    button.Click += this.hitoriGraph.Nodes[row, col].Box.ChangeColorButton_Click;
                     button.Background = new SolidColorBrush(Colors.Black);
                     button.Foreground = new SolidColorBrush(Colors.White);
                     //button.Height = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;.
@@ -94,7 +91,7 @@ namespace Hitori
                     //button.FontSize = button.ActualHeight / 3;
                     button.Margin = new Thickness(1);
 
-                    this.hitoriMatrix[row, col].Button = button;
+                    this.hitoriGraph.Nodes[row, col].Box.Button = button;
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, col);
 
@@ -103,60 +100,10 @@ namespace Hitori
             }
         }
 
-        private void Check(object sender, RoutedEventArgs e)
+        private void Verify(object sender, RoutedEventArgs e)
         {
-            bool checkRowCol = true;
-            bool checkAdja = true;
-            bool checkConnex;
-            // Vérification des lignes
-            for (int row = 0; row < this.gridLenght; row++)
-            {
-                HashSet<int> rowSet = new HashSet<int>();
-                for (int col = 0; col < this.gridLenght; col++)
-                {
-                    if (this.hitoriMatrix[row, col].State == State.White)
-                    {
-                        int sizeAdjaList = this.hitoriGraph.Nodes[row, col].AdjaList.Count;
-                        for (int x = 0; x < sizeAdjaList; x++)
-                        {
-                            if (this.hitoriGraph.Nodes[row, col].AdjaList[x].Box.State == State.White)
-                            {
-                                checkAdja = false;
-                            }
-                        }                       
-                    }
-                    else
-                    {
-                        if (!rowSet.Add(this.hitoriMatrix[row, col].Value))
-                        {
-                            // Le numéro a déjà été rencontré dans cette colonne
-                            checkRowCol = false;
-                        }
-                    }
-                }
-            }
-
-            // Vérification des colonnes
-            for (int row = 0; row < this.gridLenght; row++)
-            {
-                HashSet<int> colSet = new HashSet<int>();
-                for (int col = 0; col < this.gridLenght; col++)
-                {
-                    if (this.hitoriMatrix[row, col].State != State.White)
-                    {
-                        if (!colSet.Add(this.hitoriMatrix[row, col].Value))
-                        {
-                            // Le numéro a déjà été rencontré dans cette colonne
-                            checkRowCol = false;
-                        }
-                    }
-                }
-            }
-
-            checkConnex = ConnectedGraph.IsConnected(this.hitoriGraph);
-
             Button button = sender as Button;
-            if (checkAdja && checkConnex && checkRowCol)
+            if (Models.Hitori.Verify(this.hitoriGraph))
             {
                 button.Foreground = new SolidColorBrush(Colors.Green);
             } else

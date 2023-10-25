@@ -28,24 +28,21 @@ namespace Hitori.Models
         internal State State { get => _state; set => _state = value; }
         public void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            Box box = button.DataContext as Box;
-
-            switch (box.State)
+            switch (this._state)
             {
                 case State.Black:
-                    button.Background = new SolidColorBrush(Color.FromArgb(255, 90, 90, 90));
-                    box.State = State.Gray;
+                    this._button.Background = new SolidColorBrush(Color.FromArgb(255, 90, 90, 90));
+                    this._state = State.Gray;
                     break;
                 case State.White:
-                    button.Background = new SolidColorBrush(Colors.Black);
-                    button.Foreground = new SolidColorBrush(Colors.White);
-                    box.State = State.Black;
+                    this._button.Background = new SolidColorBrush(Colors.Black);
+                    this._button.Foreground = new SolidColorBrush(Colors.White);
+                    this._state = State.Black;
                     break;
                 case State.Gray:
-                    button.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-                    button.Foreground = new SolidColorBrush(Colors.Black);
-                    box.State = State.White;
+                    this._button.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                    this._button.Foreground = new SolidColorBrush(Colors.Black);
+                    this._state = State.White;
                     break;
             }
         }

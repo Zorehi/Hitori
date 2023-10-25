@@ -10,7 +10,7 @@ namespace Hitori.Models
 {
     class Matrix
     {
-        public static Box[,] GenerateMatrix(int length)
+        public static Box[,] ReadMatrixInFile(int length)
         {
             if (length != 5 && length != 7 && length != 9)
             {

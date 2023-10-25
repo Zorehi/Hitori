@@ -8,19 +8,13 @@ namespace Hitori.Models
 {
     class ConnectedGraph
     {
-        public static bool IsConnected(Graph graph)
+        public static bool IsConnected(Graph graph, Node start)
         {
             Stack<Node> stack = new Stack<Node>();
             int length = graph.Nodes.GetLength(0);
             bool[,] InStack = new bool[length, length];
             int count = 0;
-
-            int x = 0; int y = 0;
-            if (graph.Nodes[x, y].Box.State == State.White)
-            {
-                x = 1;
-            }
-            stack.Push(graph.Nodes[x, y]);
+            stack.Push(start);
 
             while (stack.Count > 0)
             {
