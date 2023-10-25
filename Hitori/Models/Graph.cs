@@ -13,7 +13,7 @@ namespace Hitori.Models
         public Graph(Box[,] matrix)
         {
             int x = matrix.GetLength(0);
-            List<Node> list = new List<Node>();
+           
             _nodes = new Node[x, x];
             for (int i = 0; i < x; i++)
             {
@@ -26,84 +26,72 @@ namespace Hitori.Models
             {
                 for(int l = 0; l < x; l++)
                 {
+                    _nodes[k, l].AdjaList = new List<Node>();
                     // Coin haut-gauche
                     if ( k == 0 && l == 0)
                     {
-                        list.Add(_nodes[k + 1,l]);
-                        list.Add(_nodes[k, l + 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1,l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l + 1]);
                     }
                     // Coin haut-droit
                     else if(k == 0 && l == x - 1)
                     {
-                        list.Add(_nodes[k, l - 1]);
-                        list.Add(_nodes[k + 1, l]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l - 1]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1, l]);
                     }
                     // Coin bas-gauche
                     else if(k == x-1 && l == 0)
                     {
-                        list.Add(_nodes[k, l + 1]);
-                        list.Add(_nodes[k-1, l]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l + 1]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k-1, l]);
+
                     }
                     // Coin bas-groit
                     else if (k == x-1 && l == x-1)
                     {
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k, l - 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k - 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l - 1]);
+
                     }
                     // Ligne du haut
                     else if( k == 0)
                     {
-                        list.Add(_nodes[k + 1, l]);
-                        list.Add(_nodes[k, l-1]);
-                        list.Add(_nodes[k, l+1]);
-                        _nodes[0, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l-1]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l+1]);
+
                     
                     }
                     // Ligne du bas
                     else if(k == x - 1)
                     {
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k, l - 1]);
-                        list.Add(_nodes[k, l + 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k - 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l - 1]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l + 1]);
+
                     }
                     //Colonne de gauche
                     else if(l == 0)
                     {
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k + 1, l]);
-                        list.Add(_nodes[k, l + 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k - 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l + 1]);
+
                     }
                     // Colonne de droite
                     else if(l == x - 1)
                     {
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k + 1, l]);
-                        list.Add(_nodes[k, l - 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k - 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l - 1]);
                     } 
                     else
                     {
-                        list.Add(_nodes[k - 1, l]);
-                        list.Add(_nodes[k + 1, l]);
-                        list.Add(_nodes[k, l - 1]);
-                        list.Add(_nodes[k, l + 1]);
-                        _nodes[k, l].AdjaList = list;
-                        list.Clear();
+                        _nodes[k, l].AdjaList.Add(_nodes[k - 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k + 1, l]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l - 1]);
+                        _nodes[k, l].AdjaList.Add(_nodes[k, l + 1]);
+
                     }
                 }
             }

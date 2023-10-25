@@ -107,7 +107,7 @@ namespace Hitori
         {
             bool checkRowCol = true;
             bool checkAdja = true;
-            bool checkConnex = true;
+            bool checkConnex;
             // Vérification des lignes
             for (int row = 0; row < this.gridLenght; row++)
             {
@@ -116,19 +116,21 @@ namespace Hitori
                 {
                     if (this.hitoriMatrix[row, col].State == State.White)
                     {
+                        int sizeAdjaList = this.hitoriGraph.Nodes[row, col].AdjaList.Count;
+                        for (int x = 0; x < sizeAdjaList; x++)
+                        {
+                            if (this.hitoriGraph.Nodes[row, col].AdjaList[x].Box.State == State.White)
+                            {
+                                checkAdja = false;
+                            }
+                        }                       
+                    }
+                    else
+                    {
                         if (!rowSet.Add(this.hitoriMatrix[row, col].Value))
                         {
                             // Le numéro a déjà été rencontré dans cette colonne
                             checkRowCol = false;
-                        }
-
-                        int sizeAdjaList = this.hitoriGraph.Nodes[row, col].AdjaList.Count;
-                        for (int x = 0; x < sizeAdjaList; x++)
-                        {
-                            if (this.hitoriMatrix[row, col].State == State.White)
-                            {
-                                checkAdja = false;
-                            }
                         }
                     }
                 }
@@ -140,7 +142,7 @@ namespace Hitori
                 HashSet<int> colSet = new HashSet<int>();
                 for (int col = 0; col < this.gridLenght; col++)
                 {
-                    if (this.hitoriMatrix[row, col].State == State.White)
+                    if (this.hitoriMatrix[row, col].State != State.White)
                     {
                         if (!colSet.Add(this.hitoriMatrix[row, col].Value))
                         {
@@ -154,7 +156,7 @@ namespace Hitori
             checkConnex = ConnectedGraph.IsConnected(this.hitoriGraph);
 
             Button button = sender as Button;
-            if (checkConnex && checkAdja && checkRowCol)
+            if (checkAdja && checkConnex && checkRowCol)
             {
                 button.Foreground = new SolidColorBrush(Colors.Green);
             } else
