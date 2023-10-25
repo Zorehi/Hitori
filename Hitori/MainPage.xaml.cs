@@ -25,8 +25,8 @@ namespace Hitori
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Graph hitoriGraph;
-        private int gridLenght = 9;
+        private Models.Hitori hitori;
+        private int gridLenght = 5;
 
         public MainPage()
         {
@@ -34,7 +34,7 @@ namespace Hitori
 
             this.Background = new SolidColorBrush(Color.FromArgb(255, 30, 30, 30));
 
-            this.hitoriGraph = new Graph(Models.Matrix.ReadMatrixInFile(this.gridLenght));
+            this.hitori = new Models.Hitori(Models.Matrix.ReadMatrixInFile(this.gridLenght));
 
             this.CreateDynamicGrid();
         }
@@ -54,7 +54,7 @@ namespace Hitori
             {
                 for (int col = 0; col < this.gridLenght; col++)
                 {
-                    this.hitoriGraph.Nodes[row, col].Box.Button.FontSize = this.hitoriGraph.Nodes[row, col].Box.Button.ActualHeight / 3;
+                    this.hitori.Nodes[row, col].Box.FontSize = this.hitori.Nodes[row, col].Box.ActualHeight / 3;
                 }
             }
         }
@@ -76,34 +76,21 @@ namespace Hitori
             {
                 for (int col = 0; col < this.gridLenght; col++)
                 {
-                    Button button = new Button();
-                    button.Content = $"{this.hitoriGraph.Nodes[row, col].Box.Value}"; // Texte de chaque bouton
+                    Box box = this.hitori.Nodes[row, col].Box;
+					box.Style = ButtonWithoutHover;
 
-                    button.Style = ButtonWithoutHover;
+                    Grid.SetRow(box, row);
+                    Grid.SetColumn(box, col);
 
-                    button.Click += this.hitoriGraph.Nodes[row, col].Box.ChangeColorButton_Click;
-                    button.Background = new SolidColorBrush(Colors.Black);
-                    button.Foreground = new SolidColorBrush(Colors.White);
-                    //button.Height = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;.
-                    button.VerticalAlignment = VerticalAlignment.Stretch;
-                    button.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    //button.Width = button.Height;
-                    //button.FontSize = button.ActualHeight / 3;
-                    button.Margin = new Thickness(1);
-
-                    this.hitoriGraph.Nodes[row, col].Box.Button = button;
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, col);
-
-                    DynamicGrid.Children.Add(button);
+                    DynamicGrid.Children.Add(box);
                 }
             }
         }
 
         private void Verify(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            if (Models.Hitori.Verify(this.hitoriGraph))
+			Button button = sender as Button;
+            if (this.hitori.Verify())
             {
                 button.Foreground = new SolidColorBrush(Colors.Green);
             } else

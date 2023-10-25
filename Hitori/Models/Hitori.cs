@@ -6,31 +6,34 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
-    class Hitori
+    class Hitori : Graph
     {
-        public static bool Verify(Graph graph)
+        public Hitori(Box[,] matrix) : base(matrix)
         {
-            return Hitori.CheckAdja(graph) && Hitori.CheckConnex(graph) && Hitori.CheckRowCol(graph);
+		}
+
+        public bool Verify()
+        {
+            return this.CheckAdja() && this.CheckConnex() && this.CheckRowCol();
         }
 
-        public static bool CheckRowCol(Graph graph)
+        public bool CheckRowCol()
         {
-            bool check = true;
-            int graphSize = graph.Nodes.GetLength(0);
+            int graphSize = this.Nodes.GetLength(0);
             for (int row = 0; row < graphSize; row++)
             {
                 HashSet<int> rowSet = new HashSet<int>();
                 HashSet<int> colSet = new HashSet<int>();
                 for (int col = 0; col < graphSize; col++)
                 {
-                    Box boxRC = graph.Nodes[row, col].Box;
-                    Box boxCR = graph.Nodes[col, row].Box;
+                    Box boxRC = this.Nodes[row, col].Box;
+                    Box boxCR = this.Nodes[col, row].Box;
                     if (boxRC.State == State.Black || boxRC.State == State.Gray)
                     {
                         if (!rowSet.Add(boxRC.Value))
                         {
                             // Le numéro a déjà été rencontré dans cette ligne
-                            check = false;
+                            return false;
                         }
                     }
                     if (boxCR.State == State.Black || boxCR.State == State.Gray)
@@ -38,23 +41,22 @@ namespace Hitori.Models
                         if (!colSet.Add(boxCR.Value))
                         {
                             // Le numéro a déjà été rencontré dans cette colonne
-                            check = false;
+                            return false;
                         }
                     }
                 }
             }
-            return check;
+            return true;
         }
 
-        public static bool CheckAdja(Graph graph)
+        public bool CheckAdja()
         {
-            bool check = true;
-            int graphSize = graph.Nodes.GetLength(0);
+            int graphSize = this.Nodes.GetLength(0);
             for (int row = 0; row < graphSize; row++)
             {
                 for (int col = 0; col < graphSize; col++)
                 {
-                    Node node = graph.Nodes[row, col];
+                    Node node = this.Nodes[row, col];
                     if (node.Box.State == State.White)
                     {
                         int sizeAdjaList = node.AdjaList.Count;
@@ -62,24 +64,24 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[x].Box.State == State.White)
                             {
-                                check = false;
+                                return false;
                             }
                         }
                     }
                 }
             }
-            return check;
+            return true;
         }
 
-        public static bool CheckConnex(Graph graph)
+        public bool CheckConnex()
         {
-            int x = 0; int y = 0;
-            if (graph.Nodes[x, y].Box.State == State.White)
+            int row = 0; int col = 0;
+            if (this.Nodes[row, col].Box.State == State.White)
             {
-                x = 1;
+				col = 1;
             }
 
-            return ConnectedGraph.IsConnected(graph, graph.Nodes[x, y]);
+            return ConnectedGraph.IsConnected(this, this.Nodes[row, col]);
         }
     }
 }
