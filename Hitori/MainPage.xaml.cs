@@ -26,7 +26,8 @@ namespace Hitori
     public sealed partial class MainPage : Page
     {
         private Box[,] hitoriMatrix;
-        private int gridLenght = 9;
+        private Graph hitoriGraph;
+        private int gridLenght = 5;
 
         public MainPage()
         {
@@ -35,6 +36,7 @@ namespace Hitori
             this.Background = new SolidColorBrush(Color.FromArgb(255, 30, 30, 30));
 
             this.hitoriMatrix = Models.Matrix.GenerateMatrix(this.gridLenght);
+            this.hitoriGraph = new Graph(this.hitoriMatrix);
 
             this.CreateDynamicGrid();
         }
@@ -98,6 +100,66 @@ namespace Hitori
 
                     DynamicGrid.Children.Add(button);
                 }
+            }
+        }
+
+        private void Check(object sender, RoutedEventArgs e)
+        {
+            bool checkRowCol = true;
+            bool checkAdja = true;
+            bool checkConnex = true;
+            // Vérification des lignes
+            for (int row = 0; row < this.gridLenght; row++)
+            {
+                HashSet<int> rowSet = new HashSet<int>();
+                for (int col = 0; col < this.gridLenght; col++)
+                {
+                    if (this.hitoriMatrix[row, col].State == State.White)
+                    {
+                        if (!rowSet.Add(this.hitoriMatrix[row, col].Value))
+                        {
+                            // Le numéro a déjà été rencontré dans cette colonne
+                            checkRowCol = false;
+                        }
+
+                        int sizeAdjaList = this.hitoriGraph.Nodes[row, col].AdjaList.Count;
+                        for (int x = 0; x < sizeAdjaList; x++)
+                        {
+                            if (this.hitoriMatrix[row, col].State == State.White)
+                            {
+                                checkAdja = false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Vérification des colonnes
+            for (int row = 0; row < this.gridLenght; row++)
+            {
+                HashSet<int> colSet = new HashSet<int>();
+                for (int col = 0; col < this.gridLenght; col++)
+                {
+                    if (this.hitoriMatrix[row, col].State == State.White)
+                    {
+                        if (!colSet.Add(this.hitoriMatrix[row, col].Value))
+                        {
+                            // Le numéro a déjà été rencontré dans cette colonne
+                            checkRowCol = false;
+                        }
+                    }
+                }
+            }
+
+            checkConnex = ConnectedGraph.IsConnected(this.hitoriGraph);
+
+            Button button = sender as Button;
+            if (checkConnex && checkAdja && checkRowCol)
+            {
+                button.Foreground = new SolidColorBrush(Colors.Green);
+            } else
+            {
+                button.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
     }
