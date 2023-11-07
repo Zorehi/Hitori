@@ -129,6 +129,8 @@
     <Compile Include="Models\Matrix.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Tree.cs" />
+    <Compile Include="Models\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

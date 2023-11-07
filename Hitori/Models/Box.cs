@@ -25,7 +25,14 @@ namespace Hitori.Models
 		}
 
         public int Value { get => _value; set => _value = value; }
-        public State State { get => _state; set => _state = value; }
+        public State State { 
+            get => _state;
+            set
+            {
+                _state = value;
+
+            }
+        }
         public void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {
             switch (this._state)
