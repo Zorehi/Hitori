@@ -109,7 +109,7 @@ namespace Hitori.Models
             return false;
         }
 
-        public void resolve()
+        public void Resolve()
         {
             //Tree<Hitori> tree = new Tree<Hitori>(this);
             int graphSize = this.Nodes.GetLength(0);
