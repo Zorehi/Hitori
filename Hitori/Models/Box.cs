@@ -14,18 +14,20 @@ namespace Hitori.Models
     {
         private State _state;
         private int _value;
+        private bool _isLock;
 
         public Box(int value, State state) : base()
         {
             this._value = value;
             this._state = state;
-
+            this._isLock = false;
 			this.Content = $"{this._value}";
 			this.Click += this.ChangeColorButton_Click;
 		}
 
         public int Value { get => _value; set => _value = value; }
         public State State { get => _state; set => _state = value; }
+        public bool IsLock { get => _isLock; set => _isLock = value; }
         public void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {
             switch (this._state)
