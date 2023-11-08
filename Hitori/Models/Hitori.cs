@@ -83,5 +83,43 @@ namespace Hitori.Models
 
             return ConnectedGraph.IsConnected(this, this.Nodes[row, col]);
         }
+
+        public bool CheckDuplicateValue(Node node)
+        {
+            int graphSize = this.Nodes.GetLength(0);
+            for (int i = 0; i < graphSize; i++)
+            {
+                Box boxRC = this.Nodes[node.Xpos, i].Box;
+                Box boxCR = this.Nodes[i, node.Ypos].Box;
+                if (boxRC.State == State.Black || boxRC.State == State.Gray)
+                {
+                    if (boxRC.Value == node.Box.Value && node.Ypos != i)
+                    {
+                        return true;
+                    }
+                }
+                if (boxCR.State == State.Black || boxCR.State == State.Gray)
+                {
+                    if (boxCR.Value == node.Box.Value && node.Xpos != i)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public void Resolve()
+        {
+            //Tree<Hitori> tree = new Tree<Hitori>(this);
+            int graphSize = this.Nodes.GetLength(0);
+            for (int row = 0; row < graphSize; row++)
+            {
+                for (int col = 0; col < graphSize; col++)
+                {
+
+                }
+            }
+        }
     }
 }
