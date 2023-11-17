@@ -63,11 +63,11 @@ namespace Hitori.Models
             List<int> lxPos = new List<int>();
             List<int> lyPos = new List<int>();
             // On vérifie si les voisins su sommets ont la même valeur que lui 
-            for (int i = 0; i<count; i++)
+            for (int i = 0; i < count; i++)
             {
-                if(node.AdjaList[i].Box.Value == node.Box.Value)
+                if (node.AdjaList[i].Box.Value == node.Box.Value)
                 {
-                    if(node.AdjaList[i].Xpos == node.Xpos)
+                    if (node.AdjaList[i].Xpos == node.Xpos)
                     {
                         lxPos.Add(node.AdjaList[i].Ypos);
                         cntX++;
@@ -146,16 +146,16 @@ namespace Hitori.Models
         }
         static public void Croix(Hitori hitori, Node node)
         {
-            int len = hitori.Nodes.GetLength(0); 
-            for (int i = 0; i<node.AdjaList.Count; i++)
+            int len = hitori.Nodes.GetLength(0);
+            for (int i = 0; i < node.AdjaList.Count; i++)
             {
-                if(node.Xpos == node.AdjaList[i].Xpos) // Voisin sur la même ligne 
+                if (node.Xpos == node.AdjaList[i].Xpos) // Voisin sur la même ligne 
                 {
-                    for (int j = 1; j< len-1; j++)
+                    for (int j = 1; j < len - 1; j++)
                     {
-                        if (hitori.Nodes[j,node.Ypos].Box.Value == node.Box.Value) // S'il existe une autre case avec la même valeur que la case initial 
+                        if (hitori.Nodes[j, node.Ypos].Box.Value == node.Box.Value) // S'il existe une autre case avec la même valeur que la case initial 
                         {
-                            if (node.AdjaList[i].Box.Value == hitori.Nodes[j-1, node.AdjaList[i].Ypos].Box.Value)
+                            if (node.AdjaList[i].Box.Value == hitori.Nodes[j - 1, node.AdjaList[i].Ypos].Box.Value)
                             {
                                 hitori.Nodes[j - 1, node.Ypos].Box.IsLock = true;
                                 hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
@@ -177,20 +177,28 @@ namespace Hitori.Models
                     {
                         if (hitori.Nodes[node.Xpos, k].Box.Value == node.Box.Value)
                         {
-                            if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k-1].Box.Value)
+                            if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k - 1].Box.Value)
                             {
-                                hitori.Nodes[node.Xpos,k-1].Box.IsLock = true;
+                                hitori.Nodes[node.Xpos, k - 1].Box.IsLock = true;
                                 hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
 
                             }
-                            else if (node.AdjaList[i].Box.Value == hitori.Nodes[j + 1, node.AdjaList[i].Ypos].Box.Value)
+                            else if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k + 1].Box.Value)
                             {
-                                hitori.Nodes[j + 1, node.Ypos].Box.IsLock = true;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
+                                hitori.Nodes[node.Xpos, k + 1].Box.IsLock = true;
+                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
                             }
                         }
+                    }
                 }
             }
         }
+
     }
+
+
+
+
 }
+    
+
