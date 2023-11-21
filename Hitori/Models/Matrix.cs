@@ -12,7 +12,7 @@ namespace Hitori.Models
     {
         public static Box[,] ReadMatrixInFile(int length)
         {
-            if (length != 5 && length != 7 && length != 9)
+            if (length != 5 && length != 7 && length != 9 && length != 8)
             {
                 throw new Exception($"Impossible de généré une matrice {length}x{length}");
             }

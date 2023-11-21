@@ -26,7 +26,7 @@ namespace Hitori
     public sealed partial class MainPage : Page
     {
         private Models.Hitori hitori;
-        private int gridLenght = 5;
+        private int gridLenght = 9;
 
         public MainPage()
         {
@@ -97,6 +97,11 @@ namespace Hitori
             {
                 button.Foreground = new SolidColorBrush(Colors.Red);
             }
+        }
+        private void Resolve(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            this.hitori.Resolve();
         }
     }
 }

@@ -114,10 +114,21 @@ namespace Hitori.Models
 
         public void Resolve()
         {
+
+            int len = this.Nodes.GetLength(0);
+            for (int i = 0; i < len-1; i++)
+            {
+                for(int j = 0; j < len-1; j++)
+                {
+                    PaternCheck.Tenaille(this, this.Nodes[i, j]);
+                    //PaternCheck.Doublet(this, this.Nodes[i, j]);
+                    //PaternCheck.Croix(this, this.Nodes[i, j]);
+                }
+            }
             //Tree<Hitori> tree = new Tree<Hitori>(this);
 
             // Locking every node adjacent to a white lock to black and lock it
-            int graphSize = this.Nodes.GetLength(0);
+            /*int graphSize = this.Nodes.GetLength(0);
 
             for (int row = 0; row < graphSize; row++)
             {
@@ -137,7 +148,7 @@ namespace Hitori.Models
                     }
                     
                 }
-            }
+            }*/
 
 
 
