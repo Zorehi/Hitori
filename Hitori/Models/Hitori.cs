@@ -84,34 +84,6 @@ namespace Hitori.Models
             return ConnectedGraph.IsConnected(this, this.Nodes[row, col]);
         }
 
-        public Duplicate CheckDuplicateValue(Node node)
-        {
-            int graphSize = this.Nodes.GetLength(0);
-            Duplicate duplicate = new Duplicate();
-            for (int i = 0; i < graphSize; i++)
-            {
-                Box boxRC = this.Nodes[node.Xpos, i].Box;
-                Box boxCR = this.Nodes[i, node.Ypos].Box;
-                if (boxRC.State == State.Black || boxRC.State == State.Gray)
-                {
-                    if (boxRC.Value == node.Box.Value)
-                    {
-                        duplicate.duplicateInRow.Append(this.Nodes[node.Xpos, i]);
-                    }
-                }
-                if (boxCR.State == State.Black || boxCR.State == State.Gray)
-                {
-                    if (boxCR.Value == node.Box.Value)
-                    {
-                        duplicate.duplicateInCol.Append(this.Nodes[i, node.Ypos]);
-                    }
-                }
-            }
-            return duplicate;
-        }
-
-
-
         public void Resolve()
         {
 
@@ -126,38 +98,66 @@ namespace Hitori.Models
                 }
             }
             //Tree<Hitori> tree = new Tree<Hitori>(this);
+            List<DuplicateNode> list = new List<DuplicateNode>();
+            HashSet<int> listRowSet = new HashSet<int>();
+            HashSet<int> listColSet = new HashSet<int>();
 
-            // Locking every node adjacent to a white lock to black and lock it
-            /*int graphSize = this.Nodes.GetLength(0);
-
+            int graphSize = this.Nodes.GetLength(0);
             for (int row = 0; row < graphSize; row++)
             {
+                HashSet<int> rowSet = new HashSet<int>();
+                HashSet<int> colSet = new HashSet<int>();
                 for (int col = 0; col < graphSize; col++)
                 {
-                    Duplicate duplicate = this.CheckDuplicateValue(this.Nodes[row, col]);
-
-                    if (duplicate.duplicateInCol.Any(Node.IsBlackLock))
+                    Box boxRC = this.Nodes[row, col].Box;
+                    Box boxCR = this.Nodes[col, row].Box;
+                    if (boxRC.State == State.Black || boxRC.State == State.Gray)
                     {
-                        for (int i = 0; i < duplicate.duplicateInCol.Length; i++)
+                        if (!rowSet.Add(boxRC.Value))
                         {
-                            if (!duplicate.duplicateInCol[i].IsBlackLock())
+                            if (listRowSet.Add(boxRC.Value))
                             {
-                                duplicate.duplicateInCol[i].SetWhiteForResolve();
+                                list.Add(new DuplicateNode(this, this.Nodes[row, col], false));
                             }
                         }
                     }
-                    
+                    if (boxCR.State == State.Black || boxCR.State == State.Gray)
+                    {
+                        if (!colSet.Add(boxCR.Value))
+                        {
+                            if (listColSet.Add(boxRC.Value))
+                            {
+                                list.Add(new DuplicateNode(this, this.Nodes[row, col], true));
+                            }
+                        }
+                    }
                 }
             }*/
 
+            for (int i = 0; i < list.Count; i++)
+            {
 
-
-
+                if (list[i].NodesRow.Any(Node.IsBlackLock))
+                {
+                    for (int j = 0; j < list[j].NodesRow.Count; j++)
+                    {
+                        if (!list[i].NodesRow[j].IsBlackLock())
+                        {
+                            list[i].NodesRow[j].SetWhiteForResolve();
+                        }
+                    }
+                }
+                if (list[i].NodesCol.Any(Node.IsBlackLock))
+                {
+                    for (int j = 0; j < list[j].NodesCol.Count; j++)
+                    {
+                        if (!list[i].NodesCol[j].IsBlackLock())
+                        {
+                            list[i].NodesCol[j].SetWhiteForResolve();
+                        }
+                    }
+                }
+            }
         }
-    }
-    struct Duplicate
-    {
-        public Node[] duplicateInRow;
-        public Node[] duplicateInCol;
     }
 }
