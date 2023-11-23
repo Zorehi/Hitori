@@ -11,6 +11,8 @@ namespace Hitori.Models
         // Tenaille = Si une case est entre deux cases de valeurs identique, alors cette case est forcément noir
         static public void Tenaille(Hitori hitori, Node node)
         {
+
+            
             int len = hitori.Nodes.GetLength(0);
             int valueA, valueB, valueC, valueD;
             // Cas où le somment est un coin : on ne fait rien 
@@ -25,7 +27,8 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB)
                 {
-                    node.Box.State = State.Gray;
+                    node.Box.State = State.Black;
+                    node.Box.IsLock = true;
                 }
             }
             // Cas où le sommet est à gauche ou à droite de la grille
@@ -35,7 +38,7 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos + 1, node.Ypos].Box.Value;
                 if (valueA == valueB)
                 {
-                    node.Box.State = State.Gray;
+                    node.Box.IsLock = true;
                 }
             }
             else
@@ -46,10 +49,11 @@ namespace Hitori.Models
                 valueD = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB || valueC == valueD)
                 {
-                    node.Box.State = State.Gray;
+                    node.Box.State = State.Black;
+                    node.Box.IsLock = true;
                 }
-
             }
+         
         }
         // Doublet = Si deux cases adja ont la même valeur, alors tous les cases dans la même ligne ou colonne ayant la même valeur sont blanche
         // Triplet = Si trois cases adja ont la même valeur, alors celle du milieu est forcément noire et les deux extrémités sont blancs,
@@ -96,7 +100,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[node.Xpos, j].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, j].Box.State = State.White;
+                                hitori.Nodes[node.Xpos, j].SetWhiteForResolve();
                             }
                         }
                     }
@@ -111,7 +115,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[node.Xpos, k].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k].Box.State = State.White;
+                                hitori.Nodes[node.Xpos, k].SetWhiteForResolve();
                             }
                         }
                     }
@@ -125,7 +129,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[j, node.Ypos].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[j, node.Ypos].Box.State = State.White;
+                                hitori.Nodes[j, node.Ypos].SetWhiteForResolve();
                             }
                         }
 
@@ -141,7 +145,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[k, node.Ypos].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[k, node.Ypos].Box.State = State.White;
+                                hitori.Nodes[k, node.Ypos].SetWhiteForResolve();
                             }
                         }
                     }
@@ -162,16 +166,18 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[j - 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                hitori.Nodes[j - 1, node.Ypos].Box.State = State.Gray;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Gray;
+                                hitori.Nodes[j - 1, node.Ypos].Box.State = State.Black;
+                                hitori.Nodes[j - 1, node.Ypos].Box.IsLock = true;
+                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Black;
+                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
 
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[j + 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                hitori.Nodes[j + 1, node.Ypos].Box.State = State.Gray;
-                                //hitori.Nodes[j + 1, node.Ypos].Box.IsLock = true;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Gray;
-                                //hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
+                                hitori.Nodes[j + 1, node.Ypos].Box.State = State.Black;
+                                hitori.Nodes[j + 1, node.Ypos].Box.IsLock = true;
+                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Black;
+                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
                             }
 
 
@@ -186,18 +192,18 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k - 1].Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k - 1].Box.State = State.Gray;
-                                //hitori.Nodes[node.Xpos, k - 1].Box.IsLock = true;
-                                //hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Gray;
+                                hitori.Nodes[node.Xpos, k - 1].Box.State = State.Black;
+                                hitori.Nodes[node.Xpos, k - 1].Box.IsLock = true;
+                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
+                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Black;
 
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k + 1].Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k + 1].Box.State = State.Gray;
-                                //hitori.Nodes[node.Xpos, k + 1].Box.IsLock = true;
-                                // hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Gray;
+                                hitori.Nodes[node.Xpos, k + 1].Box.State = State.Black;
+                                hitori.Nodes[node.Xpos, k + 1].Box.IsLock = true;
+                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
+                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Black;
                             }
                         }
                     }
