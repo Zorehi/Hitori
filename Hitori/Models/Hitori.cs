@@ -97,8 +97,7 @@ namespace Hitori.Models
                     PaternCheck.Croix(this, this.Nodes[i, j]);
                 }
             }
-            //Tree<Hitori> tree = new Tree<Hitori>(this);
-
+ 
         }
     }
 }
