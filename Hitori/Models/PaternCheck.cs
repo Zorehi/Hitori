@@ -63,81 +63,90 @@ namespace Hitori.Models
             List<int> lxPos = new List<int>();
             List<int> lyPos = new List<int>();
             // On vérifie si les voisins su sommets ont la même valeur que lui 
-            for (int i = 0; i < count; i++)
+            if ((node.Xpos == 0 && node.Ypos == 0) || (node.Xpos == len - 1 && node.Ypos == 0) || (node.Xpos == len - 1 && node.Ypos == len - 1) || (node.Xpos == len - 1 && node.Ypos == len - 1))
             {
-                if (node.AdjaList[i].Box.Value == node.Box.Value)
-                {
-                    if (node.AdjaList[i].Xpos == node.Xpos)
-                    {
-                        lxPos.Add(node.AdjaList[i].Ypos);
-                        cntX++;
-                    }
-                    else if (node.AdjaList[i].Ypos == node.Ypos)
-                    {
-                        lyPos.Add(node.AdjaList[i].Xpos);
-                        cntY++;
-                    }
-                }
+
             }
-            // S'il n'y a qu'un doublet sur sa ligne 
-            if (cntX == 1)
+            else
             {
-                for (int j = 0; j < len; j++)
+
+
+                for (int i = 0; i < count; i++)
                 {
-                    if (j != node.Ypos && j != lxPos[0])
+                    if (node.AdjaList[i].Box.Value == node.Box.Value)
                     {
-                        if (hitori.Nodes[node.Xpos, j].Box.Value == node.Box.Value)
+                        if (node.AdjaList[i].Xpos == node.Xpos)
                         {
-                            hitori.Nodes[node.Xpos, j].SetWhiteForResolve();
+                            lxPos.Add(node.AdjaList[i].Ypos);
+                            cntX++;
+                        }
+                        else if (node.AdjaList[i].Ypos == node.Ypos)
+                        {
+                            lyPos.Add(node.AdjaList[i].Xpos);
+                            cntY++;
                         }
                     }
                 }
-            }
-            // Si c'est un triplet sur sa ligne  
-            else if (cntX == 2)
-            {
-                node.Box.IsLock = true;
-                for (int k = 0; k < len; k++)
+                // S'il n'y a qu'un doublet sur sa ligne 
+                if (cntX == 1)
                 {
-                    if (k != node.Ypos)
+                    for (int j = 0; j < len; j++)
                     {
-                        if (hitori.Nodes[node.Xpos, k].Box.Value == node.Box.Value)
+                        if (j != node.Ypos && j != lxPos[0])
                         {
-                            hitori.Nodes[node.Xpos, k].SetWhiteForResolve();
+                            if (hitori.Nodes[node.Xpos, j].Box.Value == node.Box.Value)
+                            {
+                                hitori.Nodes[node.Xpos, j].Box.State = State.White;
+                            }
                         }
                     }
                 }
-            }
-            // S'il n'y a qu'un doublet sur sa colonne 
-            else if (cntY == 1)
-            {
-                for (int j = 0; j < len; j++)
+                // Si c'est un triplet sur sa ligne  
+                else if (cntX == 2)
                 {
-                    if (j != node.Xpos && j != lyPos[0])
+                    node.Box.IsLock = true;
+                    for (int k = 0; k < len; k++)
                     {
-                        if (hitori.Nodes[j, node.Ypos].Box.Value == node.Box.Value)
+                        if (k != node.Ypos)
                         {
-                            hitori.Nodes[j, node.Ypos].SetWhiteForResolve();
+                            if (hitori.Nodes[node.Xpos, k].Box.Value == node.Box.Value)
+                            {
+                                hitori.Nodes[node.Xpos, k].Box.State = State.White;
+                            }
+                        }
+                    }
+                }
+                // S'il n'y a qu'un doublet sur sa colonne 
+                else if (cntY == 1)
+                {
+                    for (int j = 0; j < len; j++)
+                    {
+                        if (j != node.Xpos && j != lyPos[0])
+                        {
+                            if (hitori.Nodes[j, node.Ypos].Box.Value == node.Box.Value)
+                            {
+                                hitori.Nodes[j, node.Ypos].Box.State = State.White;
+                            }
+                        }
+
+                    }
+                }
+                // Si c'est un triplet sur sa colonne 
+                else if (cntY == 2)
+                {
+                    node.Box.IsLock = true;
+                    for (int k = 0; k < len; k++)
+                    {
+                        if (k != node.Xpos)
+                        {
+                            if (hitori.Nodes[k, node.Ypos].Box.Value == node.Box.Value)
+                            {
+                                hitori.Nodes[k, node.Ypos].Box.State = State.White;
+                            }
                         }
                     }
 
                 }
-            }
-            // Si c'est un triplet sur sa colonne 
-            else if (cntY == 2)
-            {
-                node.Box.IsLock = true;
-                for (int k = 0; k < len; k++)
-                {
-                    if (k != node.Ypos)
-                    {
-                        if (hitori.Nodes[k, node.Ypos].Box.Value == node.Box.Value)
-                        {
-                            hitori.Nodes[k, node.Ypos].SetWhiteForResolve();
-                        }
-                    }
-                }
-
             }
         }
         static public void Croix(Hitori hitori, Node node)

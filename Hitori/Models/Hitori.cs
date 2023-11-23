@@ -93,8 +93,8 @@ namespace Hitori.Models
                 for(int j = 0; j < len-1; j++)
                 {
                     PaternCheck.Tenaille(this, this.Nodes[i, j]);
-                    //PaternCheck.Doublet(this, this.Nodes[i, j]);
-                    //PaternCheck.Croix(this, this.Nodes[i, j]);
+                    PaternCheck.Doublet(this, this.Nodes[i, j]);
+                    PaternCheck.Croix(this, this.Nodes[i, j]);
                 }
             }
             //Tree<Hitori> tree = new Tree<Hitori>(this);
