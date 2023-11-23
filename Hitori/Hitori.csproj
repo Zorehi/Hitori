@@ -124,7 +124,6 @@
     </Compile>
     <Compile Include="Models\Box.cs" />
     <Compile Include="Models\ConnectedGraph.cs" />
-    <Compile Include="Models\DuplicateNode.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Hitori.cs" />
     <Compile Include="Models\Matrix.cs" />

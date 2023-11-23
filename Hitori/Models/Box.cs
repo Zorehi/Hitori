@@ -29,10 +29,10 @@ namespace Hitori.Models
         public State State { 
             get => _state; 
             set {
-                if (_state != value && _isLock)
+                /*if (_state != value && _isLock)
                 {
                     throw new Exception("Une erreur est survenue dans la résolution");
-                }
+                }*/
 
                 _state = value;
                 switch (value)

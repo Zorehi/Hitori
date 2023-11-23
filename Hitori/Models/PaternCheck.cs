@@ -11,8 +11,6 @@ namespace Hitori.Models
         // Tenaille = Si une case est entre deux cases de valeurs identique, alors cette case est forcément noir
         static public void Tenaille(Hitori hitori, Node node)
         {
-
-            
             int len = hitori.Nodes.GetLength(0);
             int valueA, valueB, valueC, valueD;
             // Cas où le somment est un coin : on ne fait rien 
@@ -27,8 +25,7 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB)
                 {
-                    node.Box.State = State.Black;
-                    node.Box.IsLock = true;
+                    MakeBlack(hitori, node);
                 }
             }
             // Cas où le sommet est à gauche ou à droite de la grille
@@ -38,7 +35,7 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos + 1, node.Ypos].Box.Value;
                 if (valueA == valueB)
                 {
-                    node.Box.IsLock = true;
+                    MakeBlack(hitori, node);
                 }
             }
             else
@@ -49,8 +46,7 @@ namespace Hitori.Models
                 valueD = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB || valueC == valueD)
                 {
-                    node.Box.State = State.Black;
-                    node.Box.IsLock = true;
+                    MakeBlack(hitori, node);
                 }
             }
          
@@ -100,7 +96,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[node.Xpos, j].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, j].SetWhiteForResolve();
+                                SetWhiteForResolve(hitori, hitori.Nodes[node.Xpos, j]);
                             }
                         }
                     }
@@ -108,14 +104,13 @@ namespace Hitori.Models
                 // Si c'est un triplet sur sa ligne  
                 else if (cntX == 2)
                 {
-                    node.Box.IsLock = true;
                     for (int k = 0; k < len; k++)
                     {
                         if (k != node.Ypos)
                         {
                             if (hitori.Nodes[node.Xpos, k].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k].SetWhiteForResolve();
+                                SetWhiteForResolve(hitori, hitori.Nodes[node.Xpos, k]);
                             }
                         }
                     }
@@ -129,7 +124,7 @@ namespace Hitori.Models
                         {
                             if (hitori.Nodes[j, node.Ypos].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[j, node.Ypos].SetWhiteForResolve();
+                                SetWhiteForResolve(hitori, hitori.Nodes[j, node.Ypos]);
                             }
                         }
 
@@ -138,14 +133,13 @@ namespace Hitori.Models
                 // Si c'est un triplet sur sa colonne 
                 else if (cntY == 2)
                 {
-                    node.Box.IsLock = true;
                     for (int k = 0; k < len; k++)
                     {
                         if (k != node.Xpos)
                         {
                             if (hitori.Nodes[k, node.Ypos].Box.Value == node.Box.Value)
                             {
-                                hitori.Nodes[k, node.Ypos].SetWhiteForResolve();
+                                SetWhiteForResolve(hitori, hitori.Nodes[k, node.Ypos]);
                             }
                         }
                     }
@@ -166,21 +160,14 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[j - 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                hitori.Nodes[j - 1, node.Ypos].Box.State = State.Black;
-                                hitori.Nodes[j - 1, node.Ypos].Box.IsLock = true;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Black;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
-
+                                MakeBlack(hitori, hitori.Nodes[j - 1, node.Ypos]);
+                                MakeBlack(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[j + 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                hitori.Nodes[j + 1, node.Ypos].Box.State = State.Black;
-                                hitori.Nodes[j + 1, node.Ypos].Box.IsLock = true;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.State = State.Black;
-                                hitori.Nodes[j, node.AdjaList[i].Ypos].Box.IsLock = true;
+                                MakeBlack(hitori, hitori.Nodes[j + 1, node.Ypos]);
+                                MakeBlack(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
                             }
-
-
                         }
                     }
                 }
@@ -192,30 +179,56 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k - 1].Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k - 1].Box.State = State.Black;
-                                hitori.Nodes[node.Xpos, k - 1].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Black;
-
+                                MakeBlack(hitori, hitori.Nodes[node.Xpos, k - 1]);
+                                MakeBlack(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k + 1].Box.Value)
                             {
-                                hitori.Nodes[node.Xpos, k + 1].Box.State = State.Black;
-                                hitori.Nodes[node.Xpos, k + 1].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.IsLock = true;
-                                hitori.Nodes[node.AdjaList[i].Xpos, k].Box.State = State.Black;
+                                MakeBlack(hitori, hitori.Nodes[node.Xpos, k + 1]);
+                                MakeBlack(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
                             }
                         }
                     }
                 }
             }
         }
+        static public void SetWhiteForResolve(Hitori hitori, Node node)
+        {
+            node.Box.State = State.White;
+            node.Box.IsLock = true;
 
+            for (int i = 0; i < node.AdjaList.Count; i++)
+            {
+                MakeBlack(hitori, node.AdjaList[i]);
+            }
+        }
+
+        static public void MakeBlack(Hitori hitori, Node node)
+        {
+            if (node.Box.IsLock)
+            {
+                return;
+            }
+
+            node.Box.State = State.Gray;
+            node.Box.IsLock = true;
+
+            int graphsize = hitori.Nodes.GetLength(0);
+            for (int i = 0; i < graphsize; i++)
+            {
+                Node colNode = hitori.Nodes[node.Xpos, i];
+                Node rowNode = hitori.Nodes[i, node.Ypos];
+                if (colNode.Box.Value == node.Box.Value && i != node.Ypos)
+                {
+                    SetWhiteForResolve(hitori, colNode);
+                }
+                if (rowNode.Box.Value == node.Box.Value && i != node.Xpos)
+                {
+                    SetWhiteForResolve(hitori, rowNode);
+                }
+            }
+        }
     }
-
-
-
-
 }
     
 

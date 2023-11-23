@@ -21,7 +21,7 @@ namespace Hitori.Models
                 Node node = stack.Pop();
                 foreach (Node adj in node.AdjaList)
                 {
-                    if (!InStack[adj.Xpos, adj.Ypos] && adj.Box.State == State.Black)
+                    if (!InStack[adj.Xpos, adj.Ypos] && adj.Box.State != State.White)
                     {
                         stack.Push(adj);
                         InStack[adj.Xpos, adj.Ypos] = true;
@@ -35,7 +35,7 @@ namespace Hitori.Models
             {
                 for (int j = 0; j < length; j++)
                 {
-                    if (graph.Nodes[i, j].Box.State == State.Black) countBlack++;
+                    if (graph.Nodes[i, j].Box.State != State.White) countBlack++;
                 }
             }
 

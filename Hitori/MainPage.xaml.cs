@@ -26,7 +26,7 @@ namespace Hitori
     public sealed partial class MainPage : Page
     {
         private Models.Hitori hitori;
-        private int gridLenght = 8;
+        private int gridLenght = 5;
 
         public MainPage()
         {

@@ -31,16 +31,5 @@ namespace Hitori.Models
         {
             return node.IsBlackLock();
         }
-        public void SetWhiteForResolve()
-        {
-            this.Box.State = State.White;
-            this.Box.IsLock = true;
-
-            for (int i = 0; i < this.AdjaList.Count; i++)
-            {
-                this.AdjaList[i].Box.State = State.Black;
-                this.AdjaList[i].Box.IsLock = true;
-            }
-        }
     }
 }
