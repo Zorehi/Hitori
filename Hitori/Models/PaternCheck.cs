@@ -228,6 +228,29 @@ namespace Hitori.Models
                 }
             }
         }
+        static public bool Connected(Hitori hitori, Node node)
+        {
+            int cntW = 0;
+            int mem = 0;
+            for(int i = 0; i < node.AdjaList.Count(); i++)
+            {
+                if (node.AdjaList[i].Box.State != State.White)
+                {
+                    cntW++;
+                    mem = i;
+                }
+
+            }
+            if (cntW == 1)
+            {
+                if (node.AdjaList[mem].Box.IsLock == false)
+                {
+                    MakeBlack(hitori, node.AdjaList[mem]);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
     

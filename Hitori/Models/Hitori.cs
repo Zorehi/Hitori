@@ -97,7 +97,22 @@ namespace Hitori.Models
                     PaternCheck.Croix(this, this.Nodes[i, j]);
                 }
             }
- 
+            bool isChanged = true;
+            while (isChanged == true)
+            {
+                isChanged = false;
+                for (int i = 0; i < len - 1; i++)
+                {
+                    for (int j = 0; j < len - 1; j++)
+                    {
+                        if (PaternCheck.Connected(this, this.Nodes[i, j]) == true)
+                        {
+                            isChanged = true;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
