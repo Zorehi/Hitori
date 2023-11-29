@@ -16,6 +16,15 @@ namespace Hitori.Models
         private int _value;
         private bool _isLock;
 
+        public Box(Box box)
+        {
+            this._value = box.Value;
+            this.State = box.State;
+            this._isLock = box.IsLock;
+            this.Content = $"{this._value}";
+            this.Click += this.ChangeColorButton_Click;
+        }
+
         public Box(int value, State state) : base()
         {
             this._value = value;

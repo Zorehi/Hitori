@@ -13,6 +13,13 @@ namespace Hitori.Models
         private int _xpos,_ypos;
         private List<Node> adjaList;
 
+        public Node(Node node)
+        {
+            this._xpos = node.Xpos;
+            this._ypos = node.Ypos;
+            this._box = new Box(node.Box);
+        }
+
         public Node(int x, int y, Box box)
         {
             this._xpos = x;
