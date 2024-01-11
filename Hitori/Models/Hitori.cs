@@ -12,6 +12,10 @@ namespace Hitori.Models
         {
         }
 
+        public Hitori(Hitori hitori) : base(hitori)
+        {
+        }
+
         public bool Verify()
         {
             return this.CheckAdja() && this.CheckConnex() && this.CheckRowCol();
@@ -101,9 +105,9 @@ namespace Hitori.Models
            while (isChanged)
             {
                 isChanged = false;
-                for (int i = 0; i < len ; i++)
+                for (int i = 0; i < len; i++)
                 {
-                    for (int j = 0; j < len ; j++)
+                    for (int j = 0; j < len; j++)
                     {
                         if (PaternCheck.Connected(this, this.Nodes[i, j]))
                         {
@@ -112,8 +116,6 @@ namespace Hitori.Models
                     }
                 }
             }
-
-
         }
     }
 }

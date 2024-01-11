@@ -52,8 +52,10 @@
         </Grid.RowDefinitions>
 
         <Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Margin="538,0,0,0" Grid.Row="1" Click="Verify" Style="{StaticResource ButtonWithoutHover}">Verify</Button>
-        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Margin="776,0,0,0" Grid.Row="1" Click="Resolve" Style="{StaticResource ButtonWithoutHover}">Resolve</Button>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Padding="0 20">
+            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Verify" Style="{StaticResource ButtonWithoutHover}">Verify</Button>
+            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Resolve" Style="{StaticResource ButtonWithoutHover}">Resolve</Button>
+        </StackPanel>
 
     </Grid>
 

@@ -78,9 +78,6 @@ namespace Hitori.Models
             }
         }
 
-        public bool IsBlackLock()
-        {
-            return this.State == State.Black && this.IsLock;
-        }
+        public bool IsBlackLock { get => this.State == State.Black && this.IsLock; }
     }
 }

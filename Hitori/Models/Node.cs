@@ -32,7 +32,7 @@ namespace Hitori.Models
         public List<Node> AdjaList { get => adjaList; set => adjaList = value; }
         public bool IsBlackLock()
         {
-            return this.Box.IsBlackLock();
+            return this.Box.IsBlackLock;
         }
         public static bool IsBlackLock(Node node)
         {

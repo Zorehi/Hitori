@@ -13,9 +13,10 @@ namespace Hitori.Models
         public Tree(Hitori rootValue)
         {
             this.RootNode = new TreeNode<Hitori>(rootValue);
-
         }
 
         public TreeNode<Hitori> RootNode { get => _rootNode; set => _rootNode = value; }
+
+
     }
 }

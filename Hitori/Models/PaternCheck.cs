@@ -194,8 +194,12 @@ namespace Hitori.Models
         }
         static public void SetWhiteForResolve(Hitori hitori, Node node)
         {
-            node.Box.State = State.White;
+            if (node.Box.IsBlackLock)
+            {
+                throw new Exception("Case lock on black");
+            }
 
+            node.Box.State = State.White;
             node.Box.IsLock = true;
 
             for (int i = 0; i < node.AdjaList.Count; i++)
@@ -209,6 +213,11 @@ namespace Hitori.Models
         {
             if (node.Box.IsLock)
             {
+                if (node.Box.State == State.White)
+                {
+                    throw new Exception("Case lock on white");
+                }
+
                 return;
             }
 
