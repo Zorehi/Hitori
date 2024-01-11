@@ -9,7 +9,7 @@ namespace Hitori.Models
     class Graph
     {
         private Node[,] _nodes;
-
+        // constructeur de recopie
         public Graph(Graph graph)
         {
             int x = graph.Nodes.Length;

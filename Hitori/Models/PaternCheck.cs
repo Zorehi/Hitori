@@ -195,12 +195,14 @@ namespace Hitori.Models
         static public void SetWhiteForResolve(Hitori hitori, Node node)
         {
             node.Box.State = State.White;
+
             node.Box.IsLock = true;
 
             for (int i = 0; i < node.AdjaList.Count; i++)
             {
                 MakeBlack(hitori, node.AdjaList[i]);
             }
+            
         }
 
         static public void MakeBlack(Hitori hitori, Node node)
@@ -234,7 +236,7 @@ namespace Hitori.Models
             int mem = 0;
             for(int i = 0; i < node.AdjaList.Count(); i++)
             {
-                if (node.AdjaList[i].Box.State != State.White)
+                if (node.AdjaList[i].Box.State != State.White )
                 {
                     cntW++;
                     mem = i;

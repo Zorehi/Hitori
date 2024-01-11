@@ -16,9 +16,10 @@ namespace Hitori.Models
         {
             this.Value = value;
         } 
-
         public T Value { get => _value; set => _value = value; }
         public TreeNode<T> LeftChild { get => _leftChild; set => _leftChild = value; }
         public TreeNode<T> RightChild { get => _rightChild; set => _rightChild = value; }
+
+
     }
 }

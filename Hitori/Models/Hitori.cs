@@ -98,20 +98,21 @@ namespace Hitori.Models
                 }
             }
             bool isChanged = true;
-            while (isChanged == true)
+           while (isChanged)
             {
                 isChanged = false;
-                for (int i = 0; i < len - 1; i++)
+                for (int i = 0; i < len ; i++)
                 {
-                    for (int j = 0; j < len - 1; j++)
+                    for (int j = 0; j < len ; j++)
                     {
-                        if (PaternCheck.Connected(this, this.Nodes[i, j]) == true)
+                        if (PaternCheck.Connected(this, this.Nodes[i, j]))
                         {
                             isChanged = true;
                         }
                     }
                 }
             }
+
 
         }
     }

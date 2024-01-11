@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
-    class Tree<T>
+    class Tree
     {
-        private TreeNode<T> _rootNode;
+        private TreeNode<Hitori> _rootNode;
 
-        public Tree(T rootValue)
+        public Tree(Hitori rootValue)
         {
-            this.RootNode = new TreeNode<T>(rootValue);
+            this.RootNode = new TreeNode<Hitori>(rootValue);
+
         }
 
-        public TreeNode<T> RootNode { get => _rootNode; set => _rootNode = value; }
+        public TreeNode<Hitori> RootNode { get => _rootNode; set => _rootNode = value; }
     }
 }
