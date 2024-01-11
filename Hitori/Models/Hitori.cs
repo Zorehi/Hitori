@@ -116,6 +116,12 @@ namespace Hitori.Models
                     }
                 }
             }
+
+            bool final = Tree.finalResolve(new TreeNode<Hitori>(this));
+            if (final)
+            {
+                Tree.ShowFinalResult(this);
+            }
         }
     }
 }

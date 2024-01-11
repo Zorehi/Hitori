@@ -12,7 +12,7 @@ namespace Hitori.Models
         // constructeur de recopie
         public Graph(Graph graph)
         {
-            int x = graph.Nodes.Length;
+            int x = graph.Nodes.GetLength(0);
             this._nodes = new Node[x, x];
             for (int i = 0; i < x; i++)
             {
