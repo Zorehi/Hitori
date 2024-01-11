@@ -25,7 +25,7 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB)
                 {
-                    MakeBlack(hitori, node);
+                    SetBlackForResolve(hitori, node);
                 }
             }
             // Cas où le sommet est à gauche ou à droite de la grille
@@ -35,7 +35,7 @@ namespace Hitori.Models
                 valueB = hitori.Nodes[node.Xpos + 1, node.Ypos].Box.Value;
                 if (valueA == valueB)
                 {
-                    MakeBlack(hitori, node);
+                    SetBlackForResolve(hitori, node);
                 }
             }
             else
@@ -46,7 +46,7 @@ namespace Hitori.Models
                 valueD = hitori.Nodes[node.Xpos, node.Ypos + 1].Box.Value;
                 if (valueA == valueB || valueC == valueD)
                 {
-                    MakeBlack(hitori, node);
+                    SetBlackForResolve(hitori, node);
                 }
             }
          
@@ -160,13 +160,13 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[j - 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                MakeBlack(hitori, hitori.Nodes[j - 1, node.Ypos]);
-                                MakeBlack(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
+                                SetBlackForResolve(hitori, hitori.Nodes[j - 1, node.Ypos]);
+                                SetBlackForResolve(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[j + 1, node.AdjaList[i].Ypos].Box.Value)
                             {
-                                MakeBlack(hitori, hitori.Nodes[j + 1, node.Ypos]);
-                                MakeBlack(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
+                                SetBlackForResolve(hitori, hitori.Nodes[j + 1, node.Ypos]);
+                                SetBlackForResolve(hitori, hitori.Nodes[j, node.AdjaList[i].Ypos]);
                             }
                         }
                     }
@@ -179,13 +179,13 @@ namespace Hitori.Models
                         {
                             if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k - 1].Box.Value)
                             {
-                                MakeBlack(hitori, hitori.Nodes[node.Xpos, k - 1]);
-                                MakeBlack(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
+                                SetBlackForResolve(hitori, hitori.Nodes[node.Xpos, k - 1]);
+                                SetBlackForResolve(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
                             }
                             else if (node.AdjaList[i].Box.Value == hitori.Nodes[node.AdjaList[i].Xpos, k + 1].Box.Value)
                             {
-                                MakeBlack(hitori, hitori.Nodes[node.Xpos, k + 1]);
-                                MakeBlack(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
+                                SetBlackForResolve(hitori, hitori.Nodes[node.Xpos, k + 1]);
+                                SetBlackForResolve(hitori, hitori.Nodes[node.AdjaList[i].Xpos, k]);
                             }
                         }
                     }
@@ -204,12 +204,12 @@ namespace Hitori.Models
 
             for (int i = 0; i < node.AdjaList.Count; i++)
             {
-                MakeBlack(hitori, node.AdjaList[i]);
+                SetBlackForResolve(hitori, node.AdjaList[i]);
             }
             
         }
 
-        static public void MakeBlack(Hitori hitori, Node node)
+        static public void SetBlackForResolve(Hitori hitori, Node node)
         {
             if (node.Box.IsLock)
             {
@@ -256,7 +256,7 @@ namespace Hitori.Models
             {
                 if (node.AdjaList[mem].Box.IsLock == false)
                 {
-                    MakeBlack(hitori, node.AdjaList[mem]);
+                    SetBlackForResolve(hitori, node.AdjaList[mem]);
                     return true;
                 }
             }
