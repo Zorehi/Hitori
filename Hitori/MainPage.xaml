@@ -9,13 +9,14 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	SizeChanged="Window_SizeChanged">
 
-    <Page.Resources>
+
+	<Page.Resources>
         <Style x:Name="ButtonWithoutHover" x:Key="ButtonWithoutHover" TargetType="Button">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="1"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+			<Setter Property="Margin" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -45,18 +46,32 @@
         </Style>
     </Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
+	<Grid>
+		<NavigationView x:Name="MyNavigationView" SelectionChanged="NavigationView_SelectionChanged">
+			<NavigationView.MenuItems>
+				<NavigationViewItem Content="5x5" Tag="5"/>
+				<NavigationViewItem Content="7x7" Tag="7"/>
+				<NavigationViewItem Content="8x8" Tag="8"/>
+				<NavigationViewItem Content="9x9" Tag="9"/>
+				<NavigationViewItem Content="10x10" Tag="10"/>
+				<NavigationViewItem Content="20x20" Tag="20"/>
+			</NavigationView.MenuItems>
+		</NavigationView>
+		
+		<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-        <Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Padding="0 20">
-            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Verify" Style="{StaticResource ButtonWithoutHover}">Verify</Button>
-            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Resolve" Style="{StaticResource ButtonWithoutHover}">Resolve</Button>
-        </StackPanel>
+            <Grid Name="DynamicGrid" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Padding="0 20">
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Verify" Style="{StaticResource ButtonWithoutHover}">Verify</Button>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0" Background="#4B4B4B" FontSize="32" Height="74" Width="220" Click="Resolve" Style="{StaticResource ButtonWithoutHover}">Resolve</Button>
+            </StackPanel>
 
+		
+	    </Grid>
     </Grid>
 
 </Page>

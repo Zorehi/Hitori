@@ -24,7 +24,7 @@ namespace Hitori
     public sealed partial class MainPage : Page
     {
         private Models.Hitori hitori;
-        private int gridLenght = 20;
+        private int gridLenght = 10;
 
         /**
          * Constructeur par défaut
@@ -48,15 +48,6 @@ namespace Hitori
          */
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            foreach (var item in DynamicGrid.ColumnDefinitions)
-            {
-                item.MinWidth = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;
-            }
-            foreach (var item in DynamicGrid.RowDefinitions)
-            {
-                item.MinHeight = (Window.Current.Bounds.Height * 0.85) / this.gridLenght;
-            }
-
             for (int row = 0; row < this.gridLenght; row++)
             {
                 for (int col = 0; col < this.gridLenght; col++)
@@ -126,5 +117,33 @@ namespace Hitori
             Button button = sender as Button;
             this.hitori.Resolve();
         }
-    }
+
+        /**
+         * Méthode appelée lorsque l'utilisateur clique sur une nouvelle grille
+         * 
+         * @param sender l'objet appelant
+         * @param e les arguments de l'événement
+         */
+		private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+		{
+			if (args.SelectedItem != null)
+			{
+				var selectedItem = args.SelectedItem as NavigationViewItem;
+				if (selectedItem != null)
+				{
+					gridLenght = int.Parse(selectedItem.Tag?.ToString());
+
+					DynamicGrid.ColumnDefinitions.Clear();
+                    DynamicGrid.RowDefinitions.Clear();
+                    DynamicGrid.Children.Clear();
+
+                    this.hitori = new Models.Hitori(Models.Matrix.ReadMatrixInFile(gridLenght));
+
+                    this.CreateDynamicGrid();
+
+                    this.InvalidateMeasure();
+				}
+			}
+		}
+	}
 }
