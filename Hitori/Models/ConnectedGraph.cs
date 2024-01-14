@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
+    /**
+     * Classe permettant de tester si un graphe est connexe
+     */
     class ConnectedGraph
     {
+        /**
+         * Test si le graphe est connexe en retirant les noeuds blancs
+         * 
+         * @param graph le graphe à tester
+         * @param start le noeud de départ
+         * @return true si le graphe est connexe, false sinon
+         */
         public static bool IsConnected(Graph graph, Node start)
         {
             Stack<Node> stack = new Stack<Node>();

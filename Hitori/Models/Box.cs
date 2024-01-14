@@ -10,12 +10,21 @@ using Windows.UI;
 
 namespace Hitori.Models
 {
+    /**
+     * Classe représentant une case du jeu
+     */
     class Box : Button
     {
         private State _state;
         private int _value;
         private bool _isLock;
 
+        /**
+         * Constructeur par recopie
+         * 
+         * @param box la case à recopier
+         * @return la case recopiée
+         */
         public Box(Box box)
         {
             this._value = box.Value;
@@ -25,6 +34,13 @@ namespace Hitori.Models
             this.Click += this.ChangeColorButton_Click;
         }
 
+        /**
+         * Constructeur par défaut
+         * 
+         * @param value la valeur de la case
+         * @param state la couleur de la case
+         * @return la case
+         */
         public Box(int value, State state) : base()
         {
             this._value = value;
@@ -34,15 +50,17 @@ namespace Hitori.Models
 			this.Click += this.ChangeColorButton_Click;
 		}
 
+        /**
+         * Getter et setter de la valeur de la case
+         */
         public int Value { get => _value; set => _value = value; }
-        public State State { 
+
+		/**
+         * Getter et setter de la couleur de la case
+         */
+		public State State { 
             get => _state; 
             set {
-                /*if (_state != value && _isLock)
-                {
-                    throw new Exception("Une erreur est survenue dans la résolution");
-                }*/
-
                 _state = value;
                 switch (value)
                 {
@@ -61,7 +79,18 @@ namespace Hitori.Models
                 }
             }
         }
+
+        /**
+         * Getter et setter du verrouillage de la case
+         */
         public bool IsLock { get => _isLock; set => _isLock = value; }
+
+        /**
+         * Méthode permettant de changer la couleur de la case lors du clic de la souris
+         * 
+         * @param sender l'objet qui a envoyé l'évènement
+         * @param e les arguments de l'évènement
+         */
         public void ChangeColorButton_Click(object sender, RoutedEventArgs e)
         {
             switch (this._state)
@@ -78,6 +107,9 @@ namespace Hitori.Models
             }
         }
 
+        /**
+         * Getter permettant de savoir si la case est noire et verrouillée
+         */
         public bool IsBlackLock { get => this.State == State.Black && this.IsLock; }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
+    /**
+     * Enumerateur représentant un état d'une case
+     */
     enum State
     {
         Black = 1,

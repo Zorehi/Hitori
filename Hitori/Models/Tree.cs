@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
+    /**
+     * Classe représentant un arbre
+     */
     class Tree
     {
         private static Hitori _end;
 
+        /**
+         * Méthode static permettant de résoudre la fin du jeu avec un arbre de manière récursive
+         * 
+         * @param treeNode le noeud de l'arbre à résoudre
+         * @return true si le jeu est résolu, false sinon
+         */
         public static bool finalResolve(TreeNode<Hitori> treeNode)
         {
             int len = treeNode.Value.Nodes.GetLength(0);
@@ -83,6 +92,12 @@ namespace Hitori.Models
 
             return left || right;
         }
+
+        /**
+         * Méthode static permettant de transposé le résultat final dans le jeu
+         *
+         * @param hitori le jeu
+         */
         public static void ShowFinalResult(Hitori hitori)
         {
             int len = hitori.Nodes.GetLength(0);

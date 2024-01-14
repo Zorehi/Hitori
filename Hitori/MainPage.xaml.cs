@@ -16,18 +16,19 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
-// Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace Hitori
 {
-    /// <summary>
-    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
-    /// </summary>
+    /**
+     * Classe représentant la page principale de l'application
+     */
     public sealed partial class MainPage : Page
     {
         private Models.Hitori hitori;
-        private int gridLenght = 7;
+        private int gridLenght = 20;
 
+        /**
+         * Constructeur par défaut
+         */
         public MainPage()
         {
             this.InitializeComponent();
@@ -39,6 +40,12 @@ namespace Hitori
             this.CreateDynamicGrid();
         }
 
+        /**
+         * Méthode appelée lorsque la taille de la fenêtre change
+         *
+         * @param sender l'objet appelant
+         * @param e les arguments de l'événement
+         */
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             foreach (var item in DynamicGrid.ColumnDefinitions)
@@ -59,6 +66,9 @@ namespace Hitori
             }
         }
 
+        /**
+         * Méthode pour créer la grille dynamiquement
+         */
         private void CreateDynamicGrid()
         {
             for (int i = 0; i < this.gridLenght; i++)
@@ -87,6 +97,12 @@ namespace Hitori
             }
         }
 
+        /**
+         * Méthode appelée lorsque l'utilisateur clique sur le bouton "Vérifier"
+         *
+         * @param sender l'objet appelant
+         * @param e les arguments de l'événement
+         */
         private void Verify(object sender, RoutedEventArgs e)
         {
 			Button button = sender as Button;
@@ -98,6 +114,13 @@ namespace Hitori
                 button.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
+
+        /**
+         * Méthode appelée lorsque l'utilisateur clique sur le bouton "Résoudre"
+         *
+         * @param sender l'objet appelant
+         * @param e les arguments de l'événement
+         */
         private void Resolve(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;

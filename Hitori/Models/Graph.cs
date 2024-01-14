@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
+    /**
+     * Classe représentant un graphe en deux dimensions
+     */
     class Graph
     {
         private Node[,] _nodes;
-        // constructeur de recopie
+        
+        /**
+         * Constructeur par recopie
+         * 
+         * @param graph le graphe à recopier
+         * @return le graphe recopié
+         */
         public Graph(Graph graph)
         {
             int x = graph.Nodes.GetLength(0);
@@ -96,6 +105,12 @@ namespace Hitori.Models
             }
         }
 
+        /**
+         * Constructeur de la classe
+         * 
+         * @param matrix la matrice de cases
+         * @return le graphe créé
+         */
         public Graph(Box[,] matrix)
         {
             int x = matrix.GetLength(0);
@@ -183,6 +198,9 @@ namespace Hitori.Models
             }
         }
 
+        /**
+         * Getter et setter de la matrice de noeuds
+         */
         public Node[,] Nodes { get => _nodes; set => _nodes = value; }
 
     }

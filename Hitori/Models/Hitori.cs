@@ -6,22 +6,47 @@ using System.Threading.Tasks;
 
 namespace Hitori.Models
 {
+    /**
+     * Classe représentant le jeu Hitori
+     */
     class Hitori : Graph
     {
+        /**
+         * Constructeur par défaut
+         * 
+         * @param matrix la matrice de jeu
+         * @return le jeu
+         */
         public Hitori(Box[,] matrix) : base(matrix)
         {
         }
 
+        /**
+         * Constructeur par recopie
+         * 
+         * @param hitori le jeu à recopier
+         * @return le jeu recopié
+         */
         public Hitori(Hitori hitori) : base(hitori)
         {
         }
 
+        /**
+         * Vérifie si le jeu est résolu
+         * 
+         * @return true si le jeu est résolu, false sinon
+         */
         public bool Verify()
         {
             return this.CheckAdja() && this.CheckConnex() && this.CheckRowCol();
         }
 
-        public bool CheckRowCol()
+		/**
+         * Vérifie si les lignes et les colonnes n'ont pas de doublons
+         *
+         * @return true si les lignes et les colonnes n'ont pas de doublons, false sinon
+         */
+		public bool CheckRowCol()
         {
             int graphSize = this.Nodes.GetLength(0);
             for (int row = 0; row < graphSize; row++)
@@ -53,6 +78,11 @@ namespace Hitori.Models
             return true;
         }
 
+        /**
+         * Vérifie si les cases adjacentes d'une case blanche ne sont pas de la même couleur
+         *
+         * @return true si les cases adjacentes d'une case blanche ne sont pas de la même couleur, false sinon
+         */
         public bool CheckAdja()
         {
             int graphSize = this.Nodes.GetLength(0);
@@ -77,6 +107,11 @@ namespace Hitori.Models
             return true;
         }
 
+        /**
+         * Vérifie si le graphe est connexe
+         *
+         * @return true si le graphe est connexe, false sinon
+         */
         public bool CheckConnex()
         {
             int row = 0; int col = 0;
@@ -88,6 +123,9 @@ namespace Hitori.Models
             return ConnectedGraph.IsConnected(this, this.Nodes[row, col]);
         }
 
+        /**
+         * Résout le jeu
+         */
         public void Resolve()
         {
 
@@ -102,7 +140,7 @@ namespace Hitori.Models
                 }
             }
             bool isChanged = true;
-           while (isChanged)
+            while (isChanged)
             {
                 isChanged = false;
                 for (int i = 0; i < len; i++)
@@ -117,8 +155,7 @@ namespace Hitori.Models
                 }
             }
 
-            bool final = Tree.finalResolve(new TreeNode<Hitori>(this));
-            if (final)
+            if (Tree.finalResolve(new TreeNode<Hitori>(this)))
             {
                 Tree.ShowFinalResult(this);
             }
